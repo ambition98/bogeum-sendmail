@@ -15,6 +15,11 @@ class KafkaConsumer(
     fun consume(msg: String) {
         log.info("Consumed msg: $msg")
         val sp = msg.split(" ")
-        sendMailService.sendVerifyMail(sp[0], sp[1])
+        try {
+            sendMailService.sendVerifyMail(sp[0], sp[1])
+        } catch (e: Exception) {
+            log.warn("Fail to Sendmail: ${e.message}, email: ${sp[0]}, code: ${sp[1]}")
+            return
+        }
     }
 }

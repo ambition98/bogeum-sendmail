@@ -17,13 +17,12 @@ class KafkaConfig {
     private final lateinit var kafkaBrokerIp: String
 
     @Bean
-    fun kafkaListenerContainerFactory(): ConcurrentKafkaListenerContainerFactory<String, String> {
-        return ConcurrentKafkaListenerContainerFactory<String, String>().also {
+    fun kafkaListenerContainerFactory(): ConcurrentKafkaListenerContainerFactory<String, String> =
+        ConcurrentKafkaListenerContainerFactory<String, String>().also {
             it.setConcurrency(2)
             it.consumerFactory = DefaultKafkaConsumerFactory(getConfig())
             it.containerProperties.pollTimeout = 500
         }
-    }
 
     private fun getConfig(): Map<String, Any> =
         mapOf(
