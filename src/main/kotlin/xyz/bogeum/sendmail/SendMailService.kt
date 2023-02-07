@@ -16,18 +16,14 @@ import javax.mail.internet.MimeMessage
 class SendMailService {
 
     private val log = LoggerFactory.getLogger(SendMailService::class.java)
+
     @Value("\${server-email}")
     private final lateinit var serverEmail: String
-//    = "bogeum991@gmail.com"
 
     @Value("\${server-password}")
     private final lateinit var serverPassword: String
-//    = "gvgiaggommbjxkvp"
 
     fun sendVerifyMail(email: String, code: String) {
-        log.info("password: $serverPassword")
-        log.info("user: $serverEmail")
-        log.info("Try send mail to \"$email\"")
         val props = Properties().also {
             it["mail.smtp.host"] = "smtp.gmail.com"
             it["mail.smtp.port"] = 465

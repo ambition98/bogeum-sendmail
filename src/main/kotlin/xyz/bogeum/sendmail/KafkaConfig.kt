@@ -17,23 +17,13 @@ class KafkaConfig {
     private final lateinit var kafkaBrokerIp: String
 
     @Bean
-    fun kafkaListenerContainerFactory(): ConcurrentKafkaListenerContainerFactory<String, String> =
-        ConcurrentKafkaListenerContainerFactory<String, String>().also {
+    fun kafkaListenerContainerFactory(): ConcurrentKafkaListenerContainerFactory<String, String> {
+        return ConcurrentKafkaListenerContainerFactory<String, String>().also {
             it.setConcurrency(2)
             it.consumerFactory = DefaultKafkaConsumerFactory(getConfig())
             it.containerProperties.pollTimeout = 500
         }
-
-//    @Bean
-//    fun kafkaTemplate(): KafkaTemplate<String, String> =
-//        KafkaTemplate(DefaultKafkaProducerFactory(producerConfig()))
-//
-//    private fun producerConfig() =
-//        mapOf(
-//            ProducerConfig.BOOTSTRAP_SERVERS_CONFIG to "${secret.kafkaBrokerIp}:9092",
-//            ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG to StringSerializer::class.java,
-//            ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG to StringSerializer::class.java
-//        )
+    }
 
     private fun getConfig(): Map<String, Any> =
         mapOf(
